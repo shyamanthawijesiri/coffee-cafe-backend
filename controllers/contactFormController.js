@@ -7,15 +7,15 @@ let transporter = nodemailer.createTransport({
     // service : 'gmail',
     // host: 'smtp.gmail.com',
     auth: {
-      user: "shyamanthawijesiri33@gmail.com", // generated ethereal user
-      pass: "newambition@$NET96", // generated ethereal password
+      user: "email", // generated ethereal user
+      pass: "*******", // generated ethereal password
     },
   });
 
 const sendMsg = async (req,res) =>{
     const msgBody = {
-        from: "shyamanthawijesiri33@gmail.com",
-        to: "shyamanthawijesiri33@gmail.com",
+        // from: "shyamanthawijesiri33@gmail.com",
+        // to: "shyamanthawijesiri33@gmail.com",
         subject : req.body.subject,
         text: req.body.text
     };
