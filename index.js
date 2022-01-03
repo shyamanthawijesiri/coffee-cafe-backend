@@ -9,6 +9,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 app.use('/menu',require('./routes/menu'));
+app.use('/contact-us',require('./routes/contact-us'));
 
 
 
