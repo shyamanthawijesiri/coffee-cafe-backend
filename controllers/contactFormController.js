@@ -14,8 +14,8 @@ let transporter = nodemailer.createTransport({
 
 const sendMsg = async (req,res) =>{
     const msgBody = {
-        // from: "shyamanthawijesiri33@gmail.com",
-        // to: "shyamanthawijesiri33@gmail.com",
+        // from: "sendre",
+        // to: "reciver",
         subject : req.body.subject,
         text: req.body.text
     };
