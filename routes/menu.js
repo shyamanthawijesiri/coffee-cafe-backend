@@ -5,7 +5,7 @@ const menuController = require('../controllers/menuContorller');
 
 router.route('/')
     .get(menuController.getAllItem)
-    .post(menuController.addItem);
+    .post(menuController.uploadImage, menuController.addItem);
 
 router.route('/:id')
     .get(menuController.getItem)

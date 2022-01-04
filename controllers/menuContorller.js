@@ -1,5 +1,32 @@
+var fs = require('fs');
+var path = require('path');
+const multer  = require('multer');
+// const upload = multer({ dest: 'uploads/' })
 
 const Product = require('../models/Product');
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, 'uploads/')
+    },
+
+    filename: (req, file, cb) => {
+      const uniqueSuffix = Date.now() + file.originalname;
+      cb(null, file.fieldname + '-' + uniqueSuffix)
+    }
+  });
+
+const fileFilter = (req, file, cb) =>{
+    if(file.mimetype ==='image/png') {
+        cb(null, true);
+    }else{
+        cb(null, false);
+        cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
+    }
+
+}
+
+const upload = multer({ storage: storage, fileFilter: fileFilter })
 
 const getAllItem = async (req,res)=>{
     const result = await Product.find();
@@ -12,13 +39,19 @@ const getItem = async (req,res)=>{
     const result =  await Product.findById(id).exec();
     return res.status(200).json(result);
 }
+const uploadImage = upload.single('img');
 
 const addItem = async (req,res)=>{
-    if(!req.body.name || !req.body.price) return res.status(400).json({'message':'name and pice required'});
+    console.log(req.file);
+    if(!req.body.name || !req.body.price || !req.file) return res.status(400).json({'message':'name and pice required'});
     const newItem = {
         name : req.body.name,
-        price : req.body.price
+        price : req.body.price,
+        image : req.file.filename
+
+
     };
+    console.log(newItem);
     const result = await Product.create(newItem);
     return res.status(201).json(result);
 }
@@ -47,6 +80,7 @@ module.exports = {
     getItem,
     addItem,
     updateItem,
-    deleteItem
+    deleteItem,
+    uploadImage
 
 }
